@@ -1,0 +1,18 @@
+body {
+  background-color: dodgerblue;
+}
+.title-welcome {
+  text-shadow: 2px 0.5px white;
+}
+.card {
+  margin: 10px 10px;
+}
+.p-note-content {
+  padding: 5rem;
+}
+.error-validator-container {
+  display: none;
+}
+.success-validator-container{
+  display: none;
+}
