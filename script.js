@@ -76,12 +76,14 @@ function editNote(event) {
   let newEditContentNote = editDiv.children[1].children[1].value;
 
   //change the note in the array
-  notes.forEach((note) => {
+  for (let index = 0; index < notes.length; index++) {
+    const note = notes[index];
     if (note.id === noteId) {
       note.noteTitle = newEditTitleNote;
       note.noteContent = newEditContentNote;
+      break;
     }
-  });
+  }
   editDiv.children[1].children[0].value = "";
   editDiv.children[1].children[1].value = "";
 
@@ -195,10 +197,17 @@ function exportIntoFile() {
   a.click();
 }
 
-//finish the import and load the data in the notes!!!
+//finish the UI
 function importFromFile() {
   fetch("./notes.json")
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch(alert('There are no notes to import!'));
+    .then(response => response.json())
+    .catch(() => alert('Something went wront, check your file import!'))
+    .then(fileData => {
+      fileData.forEach(element => {
+        pushNewNote(element);
+      });
+    })
+    .then(() => {
+      updateNotes();
+    })
 }
