@@ -1,6 +1,6 @@
 let notes = [];
 let ids = 0;
-//TODO: Add note txt file
+let hasImported = false;
 function updateNotes() {
   while (true) {
     let child = document.getElementById("container-notes").children[0];
@@ -159,7 +159,6 @@ function deleteNote(event) {
   let noteToDelete = event.path[2];
   let idOfNoteToDelete = parseInt(noteToDelete.id);
 
-  //POSSIBLE BUG: ROWS REMAIN THE SAME
   let found = false;
   for (let index = 0; index < notes.length; index++) {
     const element = notes[index];
@@ -189,6 +188,10 @@ function displayNewNote(note) {
 }
 
 function exportIntoFile() {
+  if(!notes.length){
+    alert(`Can't export with no notes!`);
+    return;
+  }
   let jsonString = JSON.stringify(notes);
   let blob = new Blob([jsonString], { type: "text/plain" });
   let a = document.createElement("a");
@@ -197,9 +200,14 @@ function exportIntoFile() {
   a.click();
 }
 
-//finish the UI
+
 function importFromFile() {
-  fetch("./notes.json")
+  if(hasImported){
+    alert(`Can't import more than once!`);
+    return;
+  }
+  hasImported = true;
+  fetch('./notes.json')
     .then(response => response.json())
     .catch(() => alert('Something went wront, check your file import!'))
     .then(fileData => {
@@ -209,5 +217,5 @@ function importFromFile() {
     })
     .then(() => {
       updateNotes();
-    })
+    });
 }
