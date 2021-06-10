@@ -188,7 +188,7 @@ function displayNewNote(note) {
 }
 
 function exportIntoFile() {
-  if(!notes.length){
+  if (!notes.length) {
     alert(`Can't export with no notes!`);
     return;
   }
@@ -200,18 +200,17 @@ function exportIntoFile() {
   a.click();
 }
 
-
 function importFromFile() {
-  if(hasImported){
+  if (hasImported) {
     alert(`Can't import more than once!`);
     return;
   }
   hasImported = true;
-  fetch('./notes.json')
-    .then(response => response.json())
-    .catch(() => alert('Something went wront, check your file import!'))
-    .then(fileData => {
-      fileData.forEach(element => {
+  fetch("./notes.json")
+    .then((response) => response.json())
+    .catch(() => alert("Something went wront, check your file import!"))
+    .then((fileData) => {
+      fileData.forEach((element) => {
         pushNewNote(element);
       });
     })
